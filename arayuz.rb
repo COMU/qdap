@@ -31,6 +31,22 @@ end
 	@button_ = Qt::DialogButtonBox.new(@tab)
 	@button_.geometry = Qt::Rect.new(320, 310, 176, 27)
 	@button_.standardButtons = Qt::DialogButtonBox::Cancel|Qt::DialogButtonBox::Ok
+	
+	#parolasil
+	
+	@button_parolasil = Qt::PushButton.new(@tab)
+	@button_parolasil.geometry = Qt::Rect.new(310,110,131,27)
+	 @button_parolasil.text = Qt::Application.translate(nil, "Yeni Parola Oluştur", nil, Qt::Application::UnicodeUTF8)
+	
+	#parolasil
+	
+	#close
+	@button_kapat = Qt::PushButton.new(@tab)
+	 @button_kapat.text = Qt::Application.translate(nil, "Close", nil, Qt::Application::UnicodeUTF8)
+	 @button_kapat.geometry = Qt::Rect.new(220, 310, 91, 27)
+	Qt::Object.connect(@button_kapat, SIGNAL('clicked()'), tabWidget, SLOT('close()'))
+	#close
+	
 	@label_kad = Qt::Label.new(@tab)
 	@label_kad.geometry = Qt::Rect.new(20, 160, 81, 20)
 	@label_sad = Qt::Label.new(@tab)
@@ -121,6 +137,8 @@ end
         tabWidget.setTabText(tabWidget.indexOf(@tab), Qt::Application.translate("TabWidget", "Ekle", nil, Qt::Application::UnicodeUTF8))
         tabWidget.setTabText(tabWidget.indexOf(@tab1), Qt::Application.translate("TabWidget", "Düzenle", nil, Qt::Application::UnicodeUTF8))
  
+	Qt::Object.connect(@button_parolasil, SIGNAL('clicked()'), @line_paswd, SLOT('clear()'))
+	
 =begin
  Qt::Object.connect(@radio_per, SIGNAL('clicked(bool)'), @comboBox_bol, SLOT('setDisabled(bool)'))
  Qt::Object.connect(@radio_per, SIGNAL('clicked(bool)'), @comboBox_fklt, SLOT('setDisabled(bool)'))
@@ -151,9 +169,13 @@ def onchangedkAd text
         print $sad , "    sad  \n"
     end
  def onchangedpaswd text
+       puts "parola fonksiyon"
+   print $parola , "\n"
         $paswd = text.length
-        print $paswd , "    paswd : \n"
-
+	$parola = text
+	
+	puts "parola = text alndktan sonra"
+	print $parola , "\n"
     end
 
     def fonksiyon
