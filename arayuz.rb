@@ -1,6 +1,4 @@
-#karakter girilmedignde pencere acan cancel , ok guncellme rejected calisiyo personl icin faklte etkn degl eksk line girlrse uyarı verir
- require 'Qt'
-
+require 'Qt'
 
 $ad = 0
 $sad = 0
@@ -9,22 +7,23 @@ $paswd = 8
 
 class Uygulama < Qt::TabWidget
   
-
     slots  'onchangedAd(QString)'
     slots 'onchangedkAd(QString)'
-     slots 'onchangedsAd(QString)'
-      slots 'onchangedpaswd(QString)'
+    slots 'onchangedsAd(QString)'
+    slots 'onchangedpaswd(QString)'
     slots 'fonksiyon()'
+    slots 'slots_paswd()'
     signals 'my_signals(QString)'
  
  def setupUi(tabWidget)
 	
-   def random_password(size = 8)
-  chars = (('a'..'z').to_a + ('0'..'9').to_a) - %w(i o 0 1 l 0)
-  (1..size).collect{|a| chars[rand(chars.size)] }.join
-end 
-    $parola = random_password.inspect
-   
+   def slots_paswd
+	 def random_password(size = 8)
+          chars = (('a'..'z').to_a + ('0'..'9').to_a) - %w(i o 0 1 l 0)
+          (1..size).collect{|a| chars[rand(chars.size)] }.join
+        end
+	    @line_paswd.text = random_password.inspect
+   end
    
 	tabWidget.resize(571, 399)
         @tab = Qt::Widget.new()
@@ -33,17 +32,15 @@ end
 	@button_.standardButtons = Qt::DialogButtonBox::Cancel|Qt::DialogButtonBox::Ok
 	
 	#parolasil
-	
 	@button_parolasil = Qt::PushButton.new(@tab)
 	@button_parolasil.geometry = Qt::Rect.new(310,110,131,27)
-	 @button_parolasil.text = Qt::Application.translate(nil, "Yeni Parola Oluştur", nil, Qt::Application::UnicodeUTF8)
-	
+	@button_parolasil.text = Qt::Application.translate(nil, "Yeni Parola Oluştur", nil, Qt::Application::UnicodeUTF8)
 	#parolasil
 	
 	#close
 	@button_kapat = Qt::PushButton.new(@tab)
 	 @button_kapat.text = Qt::Application.translate(nil, "Close", nil, Qt::Application::UnicodeUTF8)
-	 @button_kapat.geometry = Qt::Rect.new(220, 310, 91, 27)
+	 @button_kapat.geometry = Qt::Rect.new(30, 310, 91, 27)
 	Qt::Object.connect(@button_kapat, SIGNAL('clicked()'), tabWidget, SLOT('close()'))
 	#close
 	
@@ -61,9 +58,8 @@ end
 	@line_sad.geometry = Qt::Rect.new(160, 70, 113, 27)
 	@line_paswd = Qt::LineEdit.new(@tab)
 	
-	@line_paswd.text = Qt::Application.translate(nil, $parola, nil, Qt::Application::UnicodeUTF8)
+	@line_paswd.text = Qt::Application.translate(nil,slots_paswd() , nil, Qt::Application::UnicodeUTF8)
 	
-	#@line_paswd.text = "türkçeKarakter"
 	@line_paswd.geometry = Qt::Rect.new(160, 110, 113, 27)
 	@line_kad = Qt::LineEdit.new(@tab)
 	@line_kad.geometry = Qt::Rect.new(160, 150, 113, 27)
@@ -137,8 +133,7 @@ end
         tabWidget.setTabText(tabWidget.indexOf(@tab), Qt::Application.translate("TabWidget", "Ekle", nil, Qt::Application::UnicodeUTF8))
         tabWidget.setTabText(tabWidget.indexOf(@tab1), Qt::Application.translate("TabWidget", "Düzenle", nil, Qt::Application::UnicodeUTF8))
  
-	Qt::Object.connect(@button_parolasil, SIGNAL('clicked()'), @line_paswd, SLOT('clear()'))
-	
+	Qt::Object.connect(@button_parolasil, SIGNAL('clicked()'), self, SLOT('slots_paswd()'))	
 =begin
  Qt::Object.connect(@radio_per, SIGNAL('clicked(bool)'), @comboBox_bol, SLOT('setDisabled(bool)'))
  Qt::Object.connect(@radio_per, SIGNAL('clicked(bool)'), @comboBox_fklt, SLOT('setDisabled(bool)'))
@@ -150,36 +145,30 @@ end
  Qt::Object.connect(@line_paswd,SIGNAL('textChanged(QString)'),self,SLOT('onchangedpaswd(QString)'))
  Qt::Object.connect(@line_sad,SIGNAL('textChanged(QString)'),self,SLOT('onchangedsAd(QString)'))
 
-
 def onchangedAd text
         $ad = text.length
         print $ad , "    ad : \n"
 
-    end
+end
 def onchangedkAd text
         $kad = text.length
         print $kad , "    kad : \n"
 
-    end
-
-
-
- def onchangedsAd text
+end
+def onchangedsAd text
         $sad = text.length
         print $sad , "    sad  \n"
-    end
- def onchangedpaswd text
-       puts "parola fonksiyon"
-   print $parola , "\n"
+end
+def onchangedpaswd text
+        puts "parola fonksiyon"
+        print $parola , "\n"
         $paswd = text.length
 	$parola = text
-	
 	puts "parola = text alndktan sonra"
 	print $parola , "\n"
-    end
-
-    def fonksiyon
-      $x = 2
+end
+def fonksiyon
+        $x = 2
 	puts "fonksiyon icine gelindi "
         dizi = Array.new
         dizi.push($ad)
@@ -192,13 +181,6 @@ def onchangedkAd text
 	       button = sender  #?? anlamadim
 	       Qt::MessageBox.warning self, "Warning", "Eksik Bilgi Girdiniz!"
 	       puts "i == 0"
-=begin
-                quit = Qt::PushButton.new('Quit')
-                quit.resize(75, 30)
-                quit.setFont(Qt::Font.new('Times', 18, Qt::Font::Bold))
-                Qt::Object.connect(quit, SIGNAL('clicked()'), quit, SLOT('close()'))
-                quit.show()
-=end 
 	        break
 	   end
        	end
@@ -213,8 +195,7 @@ def onchangedkAd text
 	  Qt::MessageBox.information self, "Information", "Bilgiler Kaydedildi"     
       end
      
-    end
-
+end
  Qt::Object.connect(@button_, SIGNAL('rejected()'), tabWidget, SLOT('close()'))
  Qt::Object.connect(@button_, SIGNAL('accepted()'),self, SLOT('fonksiyon()'))
 
@@ -223,7 +204,6 @@ def onchangedkAd text
 
    end
 end
-
 
 if $0 == __FILE__
    a = Qt::Application.new ARGV
@@ -237,8 +217,3 @@ if $0 == __FILE__
 end
 
 
-
-
-
-
-	
