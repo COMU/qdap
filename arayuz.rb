@@ -4,7 +4,8 @@ $ad = 0
 $sad = 0
 $kad = 0
 $paswd = 8
-
+$ogr = 0
+$per = 0
 class Uygulama < Qt::TabWidget
   
     slots  'onchangedAd(QString)'
@@ -13,6 +14,7 @@ class Uygulama < Qt::TabWidget
     slots 'onchangedpaswd(QString)'
     slots 'fonksiyon()'
     slots 'slots_paswd()'
+    slots 'slots_radio()'
     signals 'my_signals(QString)'
  
  def setupUi(tabWidget)
@@ -134,6 +136,8 @@ class Uygulama < Qt::TabWidget
         tabWidget.setTabText(tabWidget.indexOf(@tab1), Qt::Application.translate("TabWidget", "Düzenle", nil, Qt::Application::UnicodeUTF8))
  
 	Qt::Object.connect(@button_parolasil, SIGNAL('clicked()'), self, SLOT('slots_paswd()'))	
+	Qt::Object.connect(@radio_per, SIGNAL('clicked(bool)'), self, SLOT('slots_radio()'))
+	Qt::Object.connect(@radio_ogr, SIGNAL('clicked(bool)'), self, SLOT('slots_radio()'))
 =begin
  Qt::Object.connect(@radio_per, SIGNAL('clicked(bool)'), @comboBox_bol, SLOT('setDisabled(bool)'))
  Qt::Object.connect(@radio_per, SIGNAL('clicked(bool)'), @comboBox_fklt, SLOT('setDisabled(bool)'))
@@ -145,6 +149,10 @@ class Uygulama < Qt::TabWidget
  Qt::Object.connect(@line_paswd,SIGNAL('textChanged(QString)'),self,SLOT('onchangedpaswd(QString)'))
  Qt::Object.connect(@line_sad,SIGNAL('textChanged(QString)'),self,SLOT('onchangedsAd(QString)'))
 
+ def slots_radio
+	$ogr = 1
+ end
+ 
 def onchangedAd text
         $ad = text.length
         print $ad , "    ad : \n"
@@ -169,6 +177,12 @@ def onchangedpaswd text
 end
 def fonksiyon
         $x = 2
+	
+	if $ogr == 0 && $per == 0
+		button = sender 
+		Qt::MessageBox.warning self, "Warning", "Ogrenci ya da Personel bilgisini girin"
+		
+	end
 	puts "fonksiyon icine gelindi "
         dizi = Array.new
         dizi.push($ad)
@@ -176,7 +190,7 @@ def fonksiyon
 	dizi.push($kad)
 	dizi.push($paswd)
         dizi.each do |i|
-           if i == 0
+           if i == 0 and ($per !=0 || $ogr !=0)
 	     $x = 0
 	       button = sender  #?? anlamadim
 	       Qt::MessageBox.warning self, "Warning", "Eksik Bilgi Girdiniz!"
@@ -184,12 +198,12 @@ def fonksiyon
 	        break
 	   end
        	end
-      if $paswd < 8 and $x != 0
+      if $paswd < 8 and $x != 0 and ($per !=0 || $ogr !=0)
 		puts "$paswd < 8"
 		Qt::MessageBox.warning self, "Warning", "8 karakterden az karakter girdiniz!"
 		
       end
-      if $x!=0 and $paswd >= 8
+      if $x!=0 and $paswd >= 8 and ($per !=0 || $ogr !=0)
 	  puts "update()"
 	  update()
 	  Qt::MessageBox.information self, "Information", "Bilgiler Kaydedildi"     

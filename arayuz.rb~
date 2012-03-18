@@ -58,7 +58,7 @@ class Uygulama < Qt::TabWidget
 	@line_sad.geometry = Qt::Rect.new(160, 70, 113, 27)
 	@line_paswd = Qt::LineEdit.new(@tab)
 	
-	@line_paswd.text = Qt::Application.translate(nil, $parola, nil, Qt::Application::UnicodeUTF8)
+	@line_paswd.text = Qt::Application.translate(nil,slots_paswd() , nil, Qt::Application::UnicodeUTF8)
 	
 	@line_paswd.geometry = Qt::Rect.new(160, 110, 113, 27)
 	@line_kad = Qt::LineEdit.new(@tab)
