@@ -17,6 +17,7 @@ class Uygulama < Qt::TabWidget
     slots 'slots_radio()'
     slots 'aramaFonksiyonu_buton()'
     slots 'onchangedArama(QString)'
+    slots 'kullaniciSilme()'
     signals 'my_signals(QString)'
  
  def setupUi(tabWidget)
@@ -121,6 +122,11 @@ end
 	@label_bol1.geometry = Qt::Rect.new(270,150,81,20)
 	@comboBox_bol1 = Qt::ComboBox.new(@tab1)
 	@comboBox_bol1.geometry = Qt::Rect.new(370,150,111,27)
+	#silme
+	@button_kullanicisilme = Qt::PushButton.new(@tab1)
+	@button_kullanicisilme.geometry = Qt::Rect.new(20, 310, 101, 27)
+	@button_kullanicisilme.text = Qt::Application.translate(nil, "Kullanici Sil", nil, Qt::Application::UnicodeUTF8)
+
 	#arama butonu
 	@button_arama = Qt::PushButton.new(@tab1)
 	@button_arama.text = Qt::Application.translate(nil, "Arama Yap", nil, Qt::Application::UnicodeUTF8)
@@ -168,7 +174,11 @@ end
  
   Qt::Object.connect(@line_arama,SIGNAL('textChanged(QString)'),self,SLOT('onchangedArama(QString)'))
   Qt::Object.connect(@button_arama, SIGNAL('clicked()'), self, SLOT('aramaFonksiyonu_buton()'))
+  Qt::Object.connect(@button_kullanicisilme, SIGNAL('clicked()'), self, SLOT('kullaniciSilme()'))
   
+  def kullaniciSilme
+      Qt::MessageBox.information self, "Information", "Duzenlenmesi gereken bir fonksiyon"
+  end
   def onchangedArama  text
       puts "arama fonksiyon"
       $aramaFonksiyonu = text.length
