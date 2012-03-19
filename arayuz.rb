@@ -119,6 +119,13 @@ end
 	@label_bol1.geometry = Qt::Rect.new(270,150,81,20)
 	@comboBox_bol1 = Qt::ComboBox.new(@tab1)
 	@comboBox_bol1.geometry = Qt::Rect.new(370,150,111,27)
+	#arama butonu
+	@button_arama = Qt::PushButton.new(@tab1)
+	@button_arama.text = Qt::Application.translate(nil, "Arama Yap", nil, Qt::Application::UnicodeUTF8)
+	@button_arama.geometry = Qt::Rect.new(160, 20, 91, 27)
+	#arama satiri
+	@line_arama = Qt::LineEdit.new(@tab1)
+	@line_arama.geometry = Qt::Rect.new(20, 20, 113, 27)
 	
 	@label_kad1.text = Qt::Application.translate(nil, "Kullanıcı Adı", nil, Qt::Application::UnicodeUTF8)
         @label_sad1.text = Qt::Application.translate(nil, "Soyad", nil, Qt::Application::UnicodeUTF8)
