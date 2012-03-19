@@ -6,7 +6,7 @@ $kad = 0
 $paswd = 8
 $ogr = 0
 $per = 0
-
+$aramaFonksiyonu = 0
 class Uygulama < Qt::TabWidget 
     slots  'onchangedAd(QString)'
     slots 'onchangedkAd(QString)'
@@ -15,6 +15,8 @@ class Uygulama < Qt::TabWidget
     slots 'slots_paswd()'
     slots 'fonksiyon()'
     slots 'slots_radio()'
+    slots 'aramaFonksiyonu_buton()'
+    slots 'onchangedArama(QString)'
     signals 'my_signals(QString)'
  
  def setupUi(tabWidget)
@@ -163,7 +165,23 @@ end
  Qt::Object.connect(@line_kad,SIGNAL('textChanged(QString)'),self,SLOT('onchangedkAd(QString)'))
  Qt::Object.connect(@line_paswd,SIGNAL('textChanged(QString)'),self,SLOT('onchangedpaswd(QString)'))
  Qt::Object.connect(@line_sad,SIGNAL('textChanged(QString)'),self,SLOT('onchangedsAd(QString)'))
-      
+ 
+  Qt::Object.connect(@line_arama,SIGNAL('textChanged(QString)'),self,SLOT('onchangedArama(QString)'))
+  Qt::Object.connect(@button_arama, SIGNAL('clicked()'), self, SLOT('aramaFonksiyonu_buton()'))
+  
+  def onchangedArama  text
+      puts "arama fonksiyon"
+      $aramaFonksiyonu = text.length
+  end
+  def aramaFonksiyonu_buton
+	 if $aramaFonksiyonu !=0
+    	Qt::MessageBox.information self, "Information", "Arama Yapildi."
+	 else
+	    Qt::MessageBox.warning self, "Warning", "Arama icin veri girmediniz!"
+	 end
+  end
+  
+ 
  def slots_radio
 	$ogr = 1
  end
