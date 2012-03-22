@@ -22,7 +22,7 @@ class Uygulama < Qt::TabWidget
  
  def setupUi(tabWidget)
    
- def slots_paswd
+ def slots_paswd #parola üretme fonksiyonunun icinde "@line_paswd.text = random_password.inspect" aldıramadıgm icin baska bi fonksiyonla slot attım
 	 def random_password(size = 8)
           chars = (('a'..'z').to_a + ('0'..'9').to_a) - %w(i o 0 1 l 0)
           (1..size).collect{|a| chars[rand(chars.size)] }.join
@@ -222,6 +222,7 @@ end
 
  def fonksiyon
       $x = 2
+#$x message kutusu butun bi for boyunca tıklama gerektirmesin diye eklendi
 
 	if $ogr == 0 && $per == 0
 		button = sender 
@@ -237,7 +238,7 @@ end
 	dizi.push($paswd)
         dizi.each do |i|
            if i == 0 and ($per !=0 || $ogr !=0)
-	     $x = 0
+	     $x = 0 #tekrar yazi silinp yazılırsa $x in degerini guncelliyo
 	       button = sender  #?? anlamadim
 	       Qt::MessageBox.warning self, "Warning", "Eksik Bilgi Girdiniz!"
 	       puts "i == 0"
