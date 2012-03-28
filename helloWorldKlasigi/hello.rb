@@ -1,8 +1,3 @@
-#!/usr/bin/ruby
-# hello.rb - sample for _() and class.
-#
-# Copyright (C) 2001-2006 Masao Mutoh
-# This file is distributed under the same license as Ruby-GetText-Package.
 
 require 'rubygems'
 require 'gettext'
@@ -20,17 +15,11 @@ end
 if __FILE__ == $0
   a = HelloWorld.new
 
-  a.hello # Show in your locale
-  
-  old = GetText.locale
-  p old.to_s # Show current locale
+  GetText.set_locale_all("en")
 
-  # Change the locale to "en".
+  a.hello 
+
   GetText.set_locale_all("de")
   p GetText.locale.to_s
   a.hello # Show in English
-
-  # Retrive original locale
-  GetText.set_locale(old)
-  a.hello # Show in your locale
 end
