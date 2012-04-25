@@ -1,0 +1,76 @@
+# Hello World for Ruby/GTK -- sample for ruby-gettext-package
+#
+# Copyright (C) Masao Mutoh <mutomasa at gmail.com>
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ruby-gettext-package 0.0.1\n"
+"POT-Creation-Date: 2001-12-24 01:52:10+0900\n"
+"PO-Revision-Date: 2005-04-24 17:10+0100\n"
+"Last-Translator: Detlef Reichl <detlef!reichl()gmx!org\n"
+"Language-Team: Detlef Reichl <detlef!reichl()gmx!org\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../hello_gtk.rb:14
+msgid "Ad"
+msgstr "Name"
+
+msgid "Kullanici Sil"
+msgstr "Delete a user"
+
+msgid "Arama Yap"
+msgstr "Search"
+
+msgid "Kullanici Adi"
+msgstr "User name"
+
+msgid "Soyad"
+msgstr "Surname"
+
+msgid "Parola"
+msgstr "Password"
+
+msgid "Personel"
+msgstr "Personnel"
+
+msgid "Fakulte"
+msgstr "faculty"
+
+msgid "Bolum"
+msgstr "Department"
+
+msgid "Ogrenci"
+msgstr "Student"
+
+msgid "Yeni Parola Olustur"
+msgstr "Create a new password"
+
+msgid "Ekle"
+msgstr "Insert"
+
+
+msgid "Duzenlenmesi gereken bir fonksiyon"
+msgstr "user deleted :)"
+
+msgid "Arama icin veri girmediniz!"
+msgstr "incomplete information was entered"
+
+msgid "Arama Yapildi."
+msgstr "Searched"
+
+msgid "Ogrenci ya da Personel bilgisini girin"
+msgstr "Enter the student or personnel"
+
+msgid "Eksik Bilgi Girdiniz!"
+msgstr "incomplete information"
+
+msgid "8 karakterden az karakter girdiniz!"
+msgstr "less than 8 characters password"
+
+msgid "Bilgiler Kaydedildi"
+msgstr "changes saved"
+
