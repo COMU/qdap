@@ -1,6 +1,8 @@
  require 'Qt'
  require 'gettext'
- 
+ require 'rubygems'
+ require 'net/ldap'
+ require 'sorgu' 
 $ad = 0
 $sad = 0
 $kad = 0
@@ -85,6 +87,11 @@ end
 	@radio_per = Qt::RadioButton.new(@tab)
 	@radio_per.geometry = Qt::Rect.new(350, 80, 116, 22)
 	@comboBox_fklt = Qt::ComboBox.new(@tab)
+
+	@comboBox_fklt.insertItems(0, [Qt::Application.translate("Form", "Muhendislik-Mimarlik Fakultesi", nil, Qt::Application::UnicodeUTF8)])
+        @comboBox_fklt.insertItems(1, [Qt::Application.translate("Form", "Fen-Edebiyat Fakultesi", nil, Qt::Application::UnicodeUTF8)])
+        @comboBox_fklt.insertItems(2, [Qt::Application.translate("Form", "Egitim Fakultesi", nil, Qt::Application::UnicodeUTF8)])
+
 	@comboBox_fklt.geometry = Qt::Rect.new(160, 200, 111, 27)
 	@label_fklt = Qt::Label.new(@tab)
 	@label_fklt.geometry = Qt::Rect.new(20, 210, 81, 20)
@@ -92,6 +99,11 @@ end
 	@label_bol.geometry = Qt::Rect.new(20, 250, 81, 20)
 	@comboBox_bol = Qt::ComboBox.new(@tab)
 	@comboBox_bol.geometry = Qt::Rect.new(160, 240, 111, 27)
+
+	@comboBox_bol.insertItems(0, [Qt::Application.translate("Form", "Bilgisayar Muhendisligi", nil, Qt::Application::UnicodeUTF8)])
+        @comboBox_bol.insertItems(0, [Qt::Application.translate("Form", "Biyoloji Ogretmenligi", nil, Qt::Application::UnicodeUTF8)])
+        @comboBox_bol.insertItems(0, [Qt::Application.translate("Form", "Fizik", nil, Qt::Application::UnicodeUTF8)])
+
 	tabWidget.addTab(@tab, Qt::Application.translate(nil, "Tab 1", nil, Qt::Application::UnicodeUTF8))
 	@tab1 = Qt::Widget.new()
 	@button_1 = Qt::DialogButtonBox.new(@tab1)
@@ -122,10 +134,20 @@ end
 	@comboBox_fklt1.geometry = Qt::Rect.new(370,100,111,27)
 	@label_fklt1 = Qt::Label.new(@tab1)
 	@label_fklt1.geometry = Qt::Rect.new(270,110,81,20)
+
+	@comboBox_fklt1.insertItems(0, [Qt::Application.translate("Form", "Muhendislik-Mimarlik Fakultesi", nil, Qt::Application::UnicodeUTF8)])
+        @comboBox_fklt1.insertItems(1, [Qt::Application.translate("Form", "Fen-Edebiyat Fakultesi", nil, Qt::Application::UnicodeUTF8)])
+        @comboBox_fklt1.insertItems(2, [Qt::Application.translate("Form", "Egitim Fakultesi", nil, Qt::Application::UnicodeUTF8)])
+
 	@label_bol1 = Qt::Label.new(@tab1)
 	@label_bol1.geometry = Qt::Rect.new(270,150,81,20)
 	@comboBox_bol1 = Qt::ComboBox.new(@tab1)
 	@comboBox_bol1.geometry = Qt::Rect.new(370,150,111,27)
+
+	@comboBox_bol1.insertItems(0, [Qt::Application.translate("Form", "Bilgisayar Muhendisligi", nil, Qt::Application::UnicodeUTF8)])
+        @comboBox_bol1.insertItems(0, [Qt::Application.translate("Form", "Biyoloji Ogretmenligi", nil, Qt::Application::UnicodeUTF8)])
+        @comboBox_bol1.insertItems(0, [Qt::Application.translate("Form", "Fizik", nil, Qt::Application::UnicodeUTF8)])
+
 	#silme
 	@button_kullanicisilme = Qt::PushButton.new(@tab1)
 	@button_kullanicisilme.geometry = Qt::Rect.new(20, 310, 101, 27)
@@ -256,6 +278,7 @@ end
       puts "arama fonksiyon"
       $aramaFonksiyonu = text.length
   end
+=begin
   def aramaFonksiyonu_buton
 	 if $aramaFonksiyonu !=0
     	Qt::MessageBox.information self, "Information", _("Arama Yapildi.")
@@ -263,6 +286,7 @@ end
 	    Qt::MessageBox.warning self, "Warning", _("Arama icin veri girmediniz!")
 	 end
   end
+=end
   
  
  def slots_radio
