@@ -22,7 +22,7 @@ def aramaFonksiyonu_buton
 		  puts "SN: #{entry.sn}"
 		  @line_ad1.text = "#{entry.givenName}"
 		  @line_sad1.text = "#{entry.sn}"
-		  @line_kad1.text = "#{entry.uid}"
+		  @line_kad1.text = "#{entry.mail}"
 		  @line_paswd1.text = "#{entry.userPassword}"
 		  puts "bir sorgu yapildi"
 	 end
@@ -33,25 +33,23 @@ def aramaFonksiyonu_buton
   
   def eklemeFonksiyonu_buton
     
-    dn = "mail=#{@line_kad.text},ou=ogrenci,ou=people,dc=comu,dc=edu,dc=tr"
+    dn = "mail=#{@line_kad.text},ou=#{$bilgi},ou=people,dc=comu,dc=edu,dc=tr"
     attr = {
 	  :uid => "#{@line_kad.text}",
-          :cn => "#{@line_ad.text} #{@line_sad.text}",
-          :objectclass => ["organizationalPerson","person","inetorgperson"],
-          :sn => "#{@line_sad.text}",
-          :givenName => "#{@line_ad.text}",
-          :mail => "#{@line_kad.text}",
-          :userPassword => "#{@line_paswd.text}"
+	  :cn => "#{@line_ad.text} #{@line_sad.text}",
+	  :objectclass => ["organizationalPerson","person","inetorgperson"],
+	  :sn => "#{@line_sad.text}",
+	  :givenName => "#{@line_ad.text}",
+	  :mail => "#{@line_kad.text}",
+	  :userPassword => "#{@line_paswd.text}"
     }
 
     Net::LDAP.open( :host => 'localhost', :port => 389,:base => 
-	  'cn=#{@line_ad} #{@line_sad}', :auth => { :method => :simple, :username => "cn=admin,dc=comu,dc=edu,dc=tr",
+	  'cn=#{@line_ad.text} #{@line_sad.text}', :auth => { :method => :simple, :username => "cn=admin,dc=comu,dc=edu,dc=tr",
 	   :password => 'parola' } ) do |ldap|
 	    ldap.add( :dn => dn, :attributes => attr )
     end
   
   end
-
-
 
 
