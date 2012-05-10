@@ -33,21 +33,16 @@ def aramaFonksiyonu_buton
   
   def eklemeFonksiyonu_buton
     
-    dn = "mail=adres@comu.edu.tr,ou=ogrenci,ou=people,dc=comu,dc=edu,dc=tr"
+    dn = "mail=#{@line_kad.text},ou=ogrenci,ou=people,dc=comu,dc=edu,dc=tr"
     attr = {
-	  :uid => "adres@comu.edu.tr",
-	  :cn => "#{@line_ad.text} #{@line_sad.text}",
-	  :objectclass => ["organizationalPerson","person","inetorgperson"],
-	  :sn => "@line_sad",
-	  :givenName => "#{@line_ad.text}",
-	  :mail => "#{@line_kad.text}"
+	  :uid => "#{@line_kad.text}",
+          :cn => "#{@line_ad.text} #{@line_sad.text}",
+          :objectclass => ["organizationalPerson","person","inetorgperson"],
+          :sn => "#{@line_sad.text}",
+          :givenName => "#{@line_ad.text}",
+          :mail => "#{@line_kad.text}",
+          :userPassword => "#{@line_paswd.text}"
     }
-=begin
-Net::LDAP.open(:host => 'localhost') do |ldap|
-  puts "***"
-  ldap.add(:dn => dn, :attributes => attr)
-end
-=end
 
     Net::LDAP.open( :host => 'localhost', :port => 389,:base => 
 	  'cn=#{@line_ad} #{@line_sad}', :auth => { :method => :simple, :username => "cn=admin,dc=comu,dc=edu,dc=tr",
