@@ -74,6 +74,10 @@ def aramaFonksiyonu_buton
                   @line_kad1.text = "#{entry.mail}"
                   @line_paswd1.text = "#{entry.userPassword}"
                   ldap.delete :dn => entry.dn
+ 	          @line_ad1.text = nil
+		  @line_sad1.text = nil
+		  @line_kad1.text = nil
+		  @line_paswd1.text = nil
                   puts "bir silme yapildi"
               end
          else
