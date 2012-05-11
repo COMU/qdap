@@ -9,12 +9,11 @@ $kad = 0
 $paswd = 8
 $ogr = 0
 $per = 0
-$kullaniciSilme = 0
+
 $aramaFonksiyonu = 0
 class Uygulama < Qt::TabWidget
 include GetText
-    
-    slots 'silmeFonksiyonu()' 
+  
     slots 'secim()'
     slots  'onchangedAd(QString)'
     slots 'onchangedkAd(QString)'
@@ -211,7 +210,7 @@ end
  
   
   Qt::Object.connect(@button_arama, SIGNAL('clicked()'), self, SLOT('aramaFonksiyonu_buton()'))
-  Qt::Object.connect(@button_kullanicisilme, SIGNAL('clicked()'), self, SLOT('silmeFonksiyonu()'))
+  Qt::Object.connect(@button_kullanicisilme, SIGNAL('clicked()'), self, SLOT('kullaniciSilme()'))
   
   def secim
       if @comboBox.currentIndex == 1
@@ -231,9 +230,9 @@ end
       end
         puts "ii"
         @button_kullanicisilme.text = gettext("Kullanici Sil")
-        @button_arama.text = gettext("Arama Yap")
-        @label_kad1.text = gettext("Kullanici Adi")
-        @label_sad1.text = gettext("Soyad")
+        @button_arama.text = "Arama Yap"
+        @label_kad1.text = "Kullanici Adi"
+        @label_sad1.text = "Soyad"
         puts "klm"
         @label_paswd1.text = gettext("Parola")
         @radio_ogr1.text = gettext("Ogrenci")
@@ -266,7 +265,11 @@ end
       GetText.set_locale_all("en")
       puts "turkce"
   end
-	
+  
+  def kullaniciSilme
+      Qt::MessageBox.information self, "Information", gettext("Duzenlenmesi gereken bir fonksiyon")
+  end
+  	
  def slots_radio_per
 	$bilgi = "personel"
 	$per = 1
