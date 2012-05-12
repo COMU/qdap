@@ -1,12 +1,11 @@
  require 'Qt'
- require 'gettext'
+  require 'gettext'
  require 'rubygems'
  require 'net/ldap'
 
 def aramaFonksiyonu_buton
       $aramaFonksiyonu = @line_arama.text.length
 	 if $aramaFonksiyonu !=0
-    	#Qt::MessageBox.information self, "Information", _("Arama Yapildi.")
 	    ldap = Net::LDAP.new :host => 'localhost',
 			  :port => 389,
 			  :auth => {
@@ -24,8 +23,10 @@ def aramaFonksiyonu_buton
 	     	  @line_sad1.text = "#{entry.sn}"
 	     	  @line_kad1.text = "#{entry.mail}"
 	     	  @line_paswd1.text = "#{entry.userPassword}"
-#	     	  puts "#{entry.ou}"
-	      	  puts "bir sorgu yapildi"
+              end
+		if "#{@line_ad1.text}" == ""
+                        puts "**"
+                        Qt::MessageBox.warning self, "Warning", _("Kayit bulunamadi!")
               end
 	 else
 	    Qt::MessageBox.warning self, "Warning", _("Arama icin veri girmediniz!")
@@ -69,10 +70,12 @@ def aramaFonksiyonu_buton
               ldap.search(:base => treebase, :filter => filter) do |entry|
                   puts "DN: #{entry.dn}"
                   puts "SN: #{entry.sn}"
+=begin
                   @line_ad1.text = "#{entry.givenName}"
                   @line_sad1.text = "#{entry.sn}"
                   @line_kad1.text = "#{entry.mail}"
                   @line_paswd1.text = "#{entry.userPassword}"
+=end
                   ldap.delete :dn => entry.dn
  	          @line_ad1.text = nil
 		  @line_sad1.text = nil
@@ -80,6 +83,8 @@ def aramaFonksiyonu_buton
 		  @line_paswd1.text = nil
                   puts "bir silme yapildi"
               end
+		 Qt::MessageBox.information self, "Information", "#{@line_arama.text} Kaydi Silindi"
+	          @line_arama.text = nil
          else
             Qt::MessageBox.warning self, "Warning", _("Silme icin veri girmediniz!")
          end

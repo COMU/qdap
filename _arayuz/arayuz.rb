@@ -63,7 +63,7 @@ end
 	@button_kapat1 = Qt::PushButton.new(@tab1)
         @button_kapat1.text = Qt::Application.translate(nil, "Quit", nil, Qt::Application::UnicodeUTF8)
         @button_kapat1.geometry = Qt::Rect.new(30, 310, 91, 27)
-        Qt::Object.connect(@button_kapat1, SIGNAL('clicked()'), tabWidget, SLOT('close()'))
+        Qt::Object.connect(@button_kapat1, SIGNAL('clicked()'), tabWidget, SLOT('close()'))  
 
 	#close
 	@label_kad = Qt::Label.new(@tab)
@@ -89,6 +89,7 @@ end
 	@radio_ogr.geometry = Qt::Rect.new(350, 30, 116, 22)
 	@radio_per = Qt::RadioButton.new(@tab)
 	@radio_per.geometry = Qt::Rect.new(350, 80, 116, 22)
+=begin
 	@comboBox_fklt = Qt::ComboBox.new(@tab)
 	@comboBox_fklt.geometry = Qt::Rect.new(160, 200, 111, 27)
 	@label_fklt = Qt::Label.new(@tab)
@@ -100,6 +101,7 @@ end
 	@comboBox_fklt.insertItems(0, [Qt::Application.translate("Form", "Muhendislik-Mimarlik Fakultesi", nil, Qt::Application::UnicodeUTF8)])
 	@comboBox_fklt.insertItems(1, [Qt::Application.translate("Form", "Fen-Edebiyat Fakultesi", nil, Qt::Application::UnicodeUTF8)])
 	@comboBox_fklt.insertItems(2, [Qt::Application.translate("Form", "Egitim Fakultesi", nil, Qt::Application::UnicodeUTF8)])
+=end
 	tabWidget.addTab(@tab, Qt::Application.translate(nil, "Tab 1", nil, Qt::Application::UnicodeUTF8))
 	@tab1 = Qt::Widget.new()
 	@button_1 = Qt::DialogButtonBox.new(@tab1)
@@ -126,6 +128,7 @@ end
 	@radio_ogr1.geometry = Qt::Rect.new(270,20,116,22)
 	@radio_per1 = Qt::RadioButton.new(@tab1)
 	@radio_per1.geometry = Qt::Rect.new(270,60,116,22)
+=begin
 	@comboBox_fklt1 = Qt::ComboBox.new(@tab1)
 	@comboBox_fklt1.geometry = Qt::Rect.new(370,100,111,27)
 	@label_fklt1 = Qt::Label.new(@tab1)
@@ -136,11 +139,11 @@ end
 	@comboBox_bol1.insertItems(0, [Qt::Application.translate("Form", "Bilgisayar Muhendisligi", nil, Qt::Application::UnicodeUTF8)])
 	@comboBox_bol1.insertItems(0, [Qt::Application.translate("Form", "Biyoloji Ogretmenligi", nil, Qt::Application::UnicodeUTF8)])
 	@comboBox_bol1.insertItems(0, [Qt::Application.translate("Form", "Fizik", nil, Qt::Application::UnicodeUTF8)])
-	
 	@comboBox_bol1.geometry = Qt::Rect.new(370,150,111,27)
 	@comboBox_fklt1.insertItems(0, [Qt::Application.translate("Form", "Muhendislik-Mimarlik Fakultesi", nil, Qt::Application::UnicodeUTF8)])
 	@comboBox_fklt1.insertItems(1, [Qt::Application.translate("Form", "Fen-Edebiyat Fakultesi", nil, Qt::Application::UnicodeUTF8)])
 	@comboBox_fklt1.insertItems(2, [Qt::Application.translate("Form", "Egitim Fakultesi", nil, Qt::Application::UnicodeUTF8)])
+=end
 	#silme
 	@button_kullanicisilme = Qt::PushButton.new(@tab1)
 	@button_kullanicisilme.geometry = Qt::Rect.new(20, 310, 101, 27)
@@ -160,8 +163,8 @@ end
         @label_paswd1.text = Qt::Application.translate(nil, "Parola", nil, Qt::Application::UnicodeUTF8)
         @radio_ogr1.text = Qt::Application.translate(nil, "Ogrenci", nil, Qt::Application::UnicodeUTF8)
         @radio_per1.text = Qt::Application.translate(nil, "Personel", nil, Qt::Application::UnicodeUTF8)
-        @label_fklt1.text = Qt::Application.translate(nil, "Fakulte", nil, Qt::Application::UnicodeUTF8)
-        @label_bol1.text = Qt::Application.translate(nil, "Bolum", nil, Qt::Application::UnicodeUTF8)
+#        @label_fklt1.text = Qt::Application.translate(nil, "Fakulte", nil, Qt::Application::UnicodeUTF8)
+ #       @label_bol1.text = Qt::Application.translate(nil, "Bolum", nil, Qt::Application::UnicodeUTF8)
 	tabWidget.addTab(@tab1, Qt::Application.translate(nil, "Tab 2", nil, Qt::Application::UnicodeUTF8))
 	tabWidget.setCurrentIndex(0)
 	Qt::MetaObject.connectSlotsByName(tabWidget)  #bunu pek anlamadim 
@@ -172,11 +175,13 @@ end
         @label_paswd.text = Qt::Application.translate(nil, "Parola", nil, Qt::Application::UnicodeUTF8)
         @radio_ogr.text = Qt::Application.translate(nil, "Ogrenci", nil, Qt::Application::UnicodeUTF8)
         @radio_per.text = Qt::Application.translate(nil, "Personel", nil, Qt::Application::UnicodeUTF8)
+=begin
         @label_fklt.text = Qt::Application.translate(nil, "Fakulte", nil, Qt::Application::UnicodeUTF8)
         @label_bol.text = Qt::Application.translate(nil, "Bolum", nil, Qt::Application::UnicodeUTF8)
 	@comboBox_bol.insertItems(0, [Qt::Application.translate("Form", "Bilgisayar Muhendisligi", nil, Qt::Application::UnicodeUTF8)])
 	@comboBox_bol.insertItems(0, [Qt::Application.translate("Form", "Biyoloji Ogretmenligi", nil, Qt::Application::UnicodeUTF8)])
 	@comboBox_bol.insertItems(0, [Qt::Application.translate("Form", "Fizik", nil, Qt::Application::UnicodeUTF8)])
+=end
         tabWidget.setTabText(tabWidget.indexOf(@tab), Qt::Application.translate(nil, "Ekle", nil, Qt::Application::UnicodeUTF8))
         tabWidget.setTabText(tabWidget.indexOf(@tab1), Qt::Application.translate(nil, gettext("Duzenle"), nil, Qt::Application::UnicodeUTF8))
 	#ceviri icin buton
