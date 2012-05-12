@@ -13,7 +13,7 @@ def aramaFonksiyonu_buton
 			  :username => "cn=admin,dc=comu,dc=edu,dc=tr",
 			  :password => "parola"
 	}
-	    filter = Net::LDAP::Filter.eq("cn",@line_arama.text)
+	    filter = Net::LDAP::Filter.eq("mail",@line_arama.text)
 	    treebase = "dc=comu,dc=edu,dc=tr"
 
        	      ldap.search(:base => treebase, :filter => filter) do |entry|
@@ -64,7 +64,7 @@ def aramaFonksiyonu_buton
                           :username => "cn=admin,dc=comu,dc=edu,dc=tr",
                           :password => "parola"
         }
-            filter = Net::LDAP::Filter.eq("cn",@line_arama.text)
+            filter = Net::LDAP::Filter.eq("mail",@line_arama.text)
             treebase = "dc=comu,dc=edu,dc=tr"
 
               ldap.search(:base => treebase, :filter => filter) do |entry|

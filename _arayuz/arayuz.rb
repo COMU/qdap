@@ -36,10 +36,13 @@ include GetText
           chars = (('a'..'z').to_a + ('0'..'9').to_a) - %w(i o 0 1 l 0)
           (1..size).collect{|a| chars[rand(chars.size)] }.join
         end
-	    @line_paswd.text = random_password.inspect
+            parola = random_password.inspect
+            parola = parola.gsub!(/\W/,"")
+            puts parola
+            @line_paswd.text = parola
 end
 
-        tabWidget.windowTitle = "Deneme"
+        tabWidget.windowTitle = "qunduz"
    
 	tabWidget.resize(571, 399)
         @tab = Qt::Widget.new()
