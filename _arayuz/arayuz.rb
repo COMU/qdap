@@ -13,7 +13,7 @@ $kullaniciSilme = 0
 $aramaFonksiyonu = 0
 class Uygulama < Qt::TabWidget
 include GetText
-    
+    slots 'resetleme()'
     slots 'silmeFonksiyonu()' 
     slots 'secim()'
     slots  'onchangedAd(QString)'
@@ -31,6 +31,14 @@ include GetText
  
  def setupUi(tabWidget)
    
+def resetleme    # kullanici aramasi yapildiktan sonra yeni bi arama yapilmasi icin sayfayi temizler
+ @line_arama.text = nil 
+ @line_ad1.text = nil 
+ @line_sad1.text = nil
+ @line_kad1.text = nil
+ @line_paswd1.text = nil 
+end  
+
  def slots_paswd #parola üretme fonksiyonunun icinde "@line_paswd.text = random_password.inspect" aldıramadıgm icin baska bi fonksiyonla slot attım
 	 def random_password(size = 8)
           chars = (('a'..'z').to_a + ('0'..'9').to_a) - %w(i o 0 1 l 0)
@@ -43,6 +51,11 @@ include GetText
 end
 
         tabWidget.windowTitle = "qunduz"
+    icon = Qt::Icon.new
+    icon.addPixmap(Qt::Pixmap.new("images.jpg"), Qt::Icon::Normal, Qt::Icon::Off)
+    icon.addPixmap(Qt::Pixmap.new("images.jpg"), Qt::Icon::Normal, Qt::Icon::On)
+    icon.addPixmap(Qt::Pixmap.new("images.jpg"), Qt::Icon::Active, Qt::Icon::On)
+    tabWidget.windowIcon = icon
    
 	tabWidget.resize(571, 399)
         @tab = Qt::Widget.new()
@@ -107,9 +120,14 @@ end
 =end
 	tabWidget.addTab(@tab, Qt::Application.translate(nil, "Tab 1", nil, Qt::Application::UnicodeUTF8))
 	@tab1 = Qt::Widget.new()
-	@button_1 = Qt::DialogButtonBox.new(@tab1)
-	@button_1.geometry = Qt::Rect.new(320, 310, 176, 27)
-	@button_1.standardButtons = Qt::DialogButtonBox::Cancel|Qt::DialogButtonBox::Ok
+
+	@button_cancel2 = Qt::PushButton.new(@tab1)
+        @button_cancel2.geometry = Qt::Rect.new(280,310,91,27)
+        @button_cancel2.text = Qt::Application.translate(nil, "Cancel", nil, Qt::Application::UnicodeUTF8)
+
+        @button_reset = Qt::PushButton.new(@tab1)
+        @button_reset.geometry = Qt::Rect.new(380,310,91,27)
+        @button_reset.text = Qt::Application.translate(nil, "Reset", nil, Qt::Application::UnicodeUTF8)
 	@label_kad1 = Qt::Label.new(@tab1)
 	@label_kad1.geometry = Qt::Rect.new(20,200,81,20)
 	@label_sad1 = Qt::Label.new(@tab1)
@@ -246,8 +264,8 @@ end
         @label_paswd1.text = gettext("Parola")
         @radio_ogr1.text = gettext("Ogrenci")
         @radio_per1.text = gettext("Personel")
-        @label_fklt1.text = gettext("Fakulte")
-        @label_bol1.text = gettext("Bolum")
+   #     @label_fklt1.text = gettext("Fakulte")
+    #    @label_bol1.text = gettext("Bolum")
         @label_ad1.text = gettext("Ad")
         @label_kad.text = gettext("Kullanici Adi")
         @label_sad.text = gettext("Soyad")
@@ -255,8 +273,8 @@ end
         @label_paswd.text = gettext("Parola")
         @radio_ogr.text = gettext("Ogrenci")
         @radio_per.text = gettext("Personel")
-        @label_fklt.text = gettext("Fakulte")
-        @label_bol.text = gettext("Bolum")
+ #       @label_fklt.text = gettext("Fakulte")
+  #      @label_bol.text = gettext("Bolum")
 	@button_parolasil.text = gettext("Yeni Parola Olustur")
 	
 
@@ -346,8 +364,8 @@ end
  
  Qt::Object.connect(@button_, SIGNAL('rejected()'), tabWidget, SLOT('close()'))
  Qt::Object.connect(@button_, SIGNAL('accepted()'),self, SLOT('fonksiyon()'))
- Qt::Object.connect(@button_1,SIGNAL('rejected()'),tabWidget,SLOT('close()'))
- Qt::Object.connect(@button_1,SIGNAL('accepted()'),tabWidget,SLOT('update()'))
+ Qt::Object.connect(@button_cancel2,SIGNAL('clicked()'),tabWidget,SLOT('close()'))
+ Qt::Object.connect(@button_reset,SIGNAL('clicked()'),self,SLOT('resetleme()'))
 
    end
 end
@@ -362,4 +380,4 @@ if $0 == __FILE__
    a.exec
 
 end
-	
+  	
