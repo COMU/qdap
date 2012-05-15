@@ -13,6 +13,7 @@ $kullaniciSilme = 0
 $aramaFonksiyonu = 0
 class Uygulama < Qt::TabWidget
 include GetText
+    slots 'dizinAc()'
     slots 'resetleme()'
     slots 'silmeFonksiyonu()' 
     slots 'secim()'
@@ -31,6 +32,12 @@ include GetText
  
  def setupUi(tabWidget)
    
+
+def dizinAc
+	dosya_adi = Qt::FileDialog.new.getOpenFileName(self, tr("Open Image"))
+	puts "#{dosya_adi}"
+	puts "dizin"
+end
 def resetleme    # kullanici aramasi yapildiktan sonra yeni bi arama yapilmasi icin sayfayi temizler
  @line_arama.text = nil 
  @line_ad1.text = nil 
@@ -124,6 +131,10 @@ end
 	@button_cancel2 = Qt::PushButton.new(@tab1)
         @button_cancel2.geometry = Qt::Rect.new(280,310,91,27)
         @button_cancel2.text = Qt::Application.translate(nil, "Cancel", nil, Qt::Application::UnicodeUTF8)
+
+        @button_topluEkle = Qt::PushButton.new(@tab)
+        @button_topluEkle.geometry = Qt::Rect.new(30,270,91,27)
+	@button_topluEkle.text = Qt::Application.translate(nil,"Toplu Ekle",nil,Qt::Application::UnicodeUTF8)
 
         @button_reset = Qt::PushButton.new(@tab1)
         @button_reset.geometry = Qt::Rect.new(380,310,91,27)
@@ -219,6 +230,7 @@ end
          #@comboBox.currentIndex = 0
 	 
 	 Qt::Object.connect(@pushButton,SIGNAL('clicked()'),self,SLOT('secim()'))
+Qt::Object.connect(@button_topluEkle,SIGNAL('clicked()'),self,SLOT('dizinAc()'))
 	
 	
 	 Qt::Object.connect(@button_parolasil, SIGNAL('clicked()'), self, SLOT('slots_paswd()'))
@@ -279,20 +291,7 @@ end
 	
 
   end
-  
-  def inglizce
-	  GetText.set_locale_all("en")
-    puts "inglizce"
-  end
-  def almanca
-	GetText.set_locale_all("de")
-	puts "almanca"
-  end
-  def turkce
-      GetText.set_locale_all("en")
-      puts "turkce"
-  end
-	
+
  def slots_radio_per
 	$bilgi = "personel"
 	$per = 1
