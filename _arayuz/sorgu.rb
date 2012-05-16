@@ -102,11 +102,32 @@ def dizinAc
         dosya_adi = Qt::FileDialog.new.getOpenFileName(self, tr("Open Image"))
         puts "#{dosya_adi}"
         puts "dizin"
-        myfile = File.open("temp.txt")
+        myfile = File.open("ornek.txt")
         myfile.each do |line| puts line; 
 		dizi =line.split(",")
-		dizi.each do |i|
-			 puts i;
-		end
+	        puts dizi[0] # cn
+		puts dizi[1] # mail
+		puts dizi[2] #ou 
+		puts dizi[3] # parola
+		puts "****"
+		@temp = Array.new
+		@temp = dizi[0].split(" ") # kullanici adi ve soyadini ayirsin diye
+    dn = "mail=#{dizi[1]},ou=#{dizi[2]},ou=people,dc=comu,dc=edu,dc=tr"
+    attr = {
+          :uid => "#{dizi[1]}",
+          :cn => "#{dizi[0]}",
+          :objectclass => ["organizationalPerson","person","inetorgperson"],
+          :sn => "#{@temp[1]}",
+          :givenName => "#{@temp[1]}",
+          :mail => "#{dizi[1]}",
+          :userPassword => "#{dizi[3]}"
+    }
+    Net::LDAP.open( :host => 'localhost', :port => 389,:base =>
+          'cn=#{dizi[0]}', :auth => { :method => :simple, :username => "cn=admin,dc=comu,dc=edu,dc=tr",
+           :password => 'parola' } ) do |ldap|
+            ldap.add( :dn => dn, :attributes => attr )
+    end
+
 	end
 end
+
