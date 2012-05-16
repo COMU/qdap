@@ -70,12 +70,6 @@ def aramaFonksiyonu_buton
               ldap.search(:base => treebase, :filter => filter) do |entry|
                   puts "DN: #{entry.dn}"
                   puts "SN: #{entry.sn}"
-=begin
-                  @line_ad1.text = "#{entry.givenName}"
-                  @line_sad1.text = "#{entry.sn}"
-                  @line_kad1.text = "#{entry.mail}"
-                  @line_paswd1.text = "#{entry.userPassword}"
-=end
                   ldap.delete :dn => entry.dn
  	          @line_ad1.text = nil
          	  @line_sad1.text = nil
@@ -102,12 +96,20 @@ def dizinAc
         dosya_adi = Qt::FileDialog.new.getOpenFileName(self, tr("Open Image"))
         puts "#{dosya_adi}"
         puts "dizin"
-        myfile = File.open("ornek.txt")
+        myfile = File.open("#{dosya_adi}")
         myfile.each do |line| puts line; 
 		dizi =line.split(",")
 	        puts dizi[0] # cn
 		puts dizi[1] # mail
-		puts dizi[2] #ou 
+		puts dizi[2] #ou
+	        
+  	def random_password(size = 8)
+          chars = (('a'..'z').to_a + ('0'..'9').to_a) - %w(i o 0 1 l 0)
+          (1..size).collect{|a| chars[rand(chars.size)] }.join
+        end
+            dizi[3] = random_password.inspect
+            dizi[3] = dizi[3].gsub!(/\W/,"")
+       
 		puts dizi[3] # parola
 		puts "****"
 		@temp = Array.new
