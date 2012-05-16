@@ -1,5 +1,5 @@
  require 'Qt'
-  require 'gettext'
+ require 'gettext'
  require 'rubygems'
  require 'net/ldap'
 
@@ -15,7 +15,6 @@ def aramaFonksiyonu_buton
 	}
 	    filter = Net::LDAP::Filter.eq("mail",@line_arama.text)
 	    treebase = "dc=comu,dc=edu,dc=tr"
-
        	      ldap.search(:base => treebase, :filter => filter) do |entry|
 	     	  puts "DN: #{entry.dn}"
 	     	  puts "SN: #{entry.sn}"
@@ -23,11 +22,12 @@ def aramaFonksiyonu_buton
 	     	  @line_sad1.text = "#{entry.sn}"
 	     	  @line_kad1.text = "#{entry.mail}"
 	     	  @line_paswd1.text = "#{entry.userPassword}"
+ 	      	  puts "bir sorgu yapildi"
               end
-		if "#{@line_ad1.text}" == ""
-                        puts "**"
-                        Qt::MessageBox.warning self, "Warning", _("Kayit bulunamadi!")
-              end
+	      if "#{@line_ad1.text}" == ""
+			puts "**"
+			Qt::MessageBox.warning self, "Warning", _("Kayit bulunamadi!")
+	      end
 	 else
 	    Qt::MessageBox.warning self, "Warning", _("Arama icin veri girmediniz!")
 	 end
@@ -78,14 +78,35 @@ def aramaFonksiyonu_buton
 =end
                   ldap.delete :dn => entry.dn
  	          @line_ad1.text = nil
-		  @line_sad1.text = nil
-		  @line_kad1.text = nil
+         	  @line_sad1.text = nil
+         	  @line_kad1.text = nil
 		  @line_paswd1.text = nil
                   puts "bir silme yapildi"
               end
-		 Qt::MessageBox.information self, "Information", "#{@line_arama.text} Kaydi Silindi"
-	          @line_arama.text = nil
+            Qt::MessageBox.information self, "Information", "#{@line_arama.text} Kaydi Silindi"
+	     @line_arama.text = nil
          else
             Qt::MessageBox.warning self, "Warning", _("Silme icin veri girmediniz!")
          end
   end
+
+def resetleme    # kullanici aramasi yapildiktan sonra yeni bi arama yapilmasi icin sayfayi temizler
+ @line_arama.text = nil 
+ @line_ad1.text = nil 
+ @line_sad1.text = nil
+ @line_kad1.text = nil
+ @line_paswd1.text = nil 
+end 
+
+def dizinAc
+        dosya_adi = Qt::FileDialog.new.getOpenFileName(self, tr("Open Image"))
+        puts "#{dosya_adi}"
+        puts "dizin"
+        myfile = File.open("temp.txt")
+        myfile.each do |line| puts line; 
+		dizi =line.split(",")
+		dizi.each do |i|
+			 puts i;
+		end
+	end
+end

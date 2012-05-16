@@ -32,20 +32,6 @@ include GetText
  
  def setupUi(tabWidget)
    
-
-def dizinAc
-	dosya_adi = Qt::FileDialog.new.getOpenFileName(self, tr("Open Image"))
-	puts "#{dosya_adi}"
-	puts "dizin"
-end
-def resetleme    # kullanici aramasi yapildiktan sonra yeni bi arama yapilmasi icin sayfayi temizler
- @line_arama.text = nil 
- @line_ad1.text = nil 
- @line_sad1.text = nil
- @line_kad1.text = nil
- @line_paswd1.text = nil 
-end  
-
  def slots_paswd #parola üretme fonksiyonunun icinde "@line_paswd.text = random_password.inspect" aldıramadıgm icin baska bi fonksiyonla slot attım
 	 def random_password(size = 8)
           chars = (('a'..'z').to_a + ('0'..'9').to_a) - %w(i o 0 1 l 0)
