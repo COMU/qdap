@@ -13,6 +13,7 @@ $kullaniciSilme = 0
 $aramaFonksiyonu = 0
 class Uygulama < Qt::TabWidget
 include GetText
+    slots 'duzenle()'
     slots 'dizinAc()'
     slots 'resetleme()'
     slots 'silmeFonksiyonu()' 
@@ -28,6 +29,8 @@ include GetText
     slots 'aramaFonksiyonu_buton()'
     slots 'onchangedArama(QString)'
     slots 'kullaniciSilme()'
+    slots 'dialogBox()'
+    slots 'toplu_sil()'
     signals 'my_signals(QString)'
  
  def setupUi(tabWidget)
@@ -72,7 +75,7 @@ end
 	@button_kapat1 = Qt::PushButton.new(@tab1)
         @button_kapat1.text = Qt::Application.translate(nil, "Quit", nil, Qt::Application::UnicodeUTF8)
         @button_kapat1.geometry = Qt::Rect.new(30, 310, 91, 27)
-        Qt::Object.connect(@button_kapat1, SIGNAL('clicked()'), tabWidget, SLOT('close()'))  
+        Qt::Object.connect(@button_kapat1, SIGNAL('clicked()'), tabWidget, SLOT('close()'))
 
 	#close
 	@label_kad = Qt::Label.new(@tab)
@@ -122,6 +125,18 @@ end
         @button_topluEkle.geometry = Qt::Rect.new(30,270,91,27)
 	@button_topluEkle.text = Qt::Application.translate(nil,"Toplu Ekle",nil,Qt::Application::UnicodeUTF8)
 
+	@button_topluSil = Qt::PushButton.new(@tab)
+        @button_topluSil.geometry = Qt::Rect.new(130,270,91,27)
+        @button_topluSil.text = Qt::Application.translate(nil,"Toplu Sil",nil,Qt::Application::UnicodeUTF8)
+	
+	Qt::Object.connect(@button_topluSil,SIGNAL('clicked()'),self,SLOT('toplu_sil()'))
+
+	@button_gecici = Qt::PushButton.new(@tab)   
+	@button_gecici.geometry = Qt::Rect.new(30,230,91,27)
+	@button_gecici.text = Qt::Application.translate(nil,"Gecici Ekle",nil,Qt::Application::UnicodeUTF8)
+	
+	Qt::Object.connect(@button_gecici,SIGNAL('clicked()'),self,SLOT('dialogBox()'))
+
         @button_reset = Qt::PushButton.new(@tab1)
         @button_reset.geometry = Qt::Rect.new(380,310,91,27)
         @button_reset.text = Qt::Application.translate(nil, "Reset", nil, Qt::Application::UnicodeUTF8)
@@ -166,6 +181,13 @@ end
 	@button_kullanicisilme = Qt::PushButton.new(@tab1)
 	@button_kullanicisilme.geometry = Qt::Rect.new(20, 310, 101, 27)
 	@button_kullanicisilme.text = Qt::Application.translate(nil, "Kullanici Sil", nil, Qt::Application::UnicodeUTF8)
+	
+        @button_kullaniciDuzenle = Qt::PushButton.new(@tab1)
+        @button_kullaniciDuzenle.geometry = Qt::Rect.new(140, 310, 120, 27)
+        @button_kullaniciDuzenle.text = Qt::Application.translate(nil, "Kullanici Duzenle", nil, Qt::Application::UnicodeUTF8)
+	
+	 Qt::Object.connect(@button_kullaniciDuzenle, SIGNAL('clicked()'), self, SLOT('duzenle()'))
+
 
 	#arama butonu
 	@button_arama = Qt::PushButton.new(@tab1)
@@ -214,7 +236,7 @@ end
          @comboBox.insertItems(1, [Qt::Application.translate("Form", "En", nil, Qt::Application::UnicodeUTF8)])
 	 @comboBox.insertItems(2, [Qt::Application.translate("Form", "De", nil, Qt::Application::UnicodeUTF8)])
          #@comboBox.currentIndex = 0
-	 
+	
 	 Qt::Object.connect(@pushButton,SIGNAL('clicked()'),self,SLOT('secim()'))
 Qt::Object.connect(@button_topluEkle,SIGNAL('clicked()'),self,SLOT('dizinAc()'))
 	
@@ -340,10 +362,12 @@ Qt::Object.connect(@button_topluEkle,SIGNAL('clicked()'),self,SLOT('dizinAc()'))
       end
       if $x!=0 and $paswd >= 8 and ($per !=0 || $ogr !=0)
 	  puts "update()"
-	  #update()
 	  eklemeFonksiyonu_buton
-	  Qt::MessageBox.information self, "Information", _("Bilgiler Kaydedildi")
-      end
+#	  if $ekleme_onceden_yapilmismi == 0
+		  Qt::MessageBox.information self, "Information", _("Bilgiler Kaydedildi")
+#		  $ekleme_onceden_yapilmismi = 0 # deger guncelledik
+ #         end
+       end
      
  end
  
