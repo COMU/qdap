@@ -363,10 +363,9 @@ Qt::Object.connect(@button_topluEkle,SIGNAL('clicked()'),self,SLOT('dizinAc()'))
       if $x!=0 and $paswd >= 8 and ($per !=0 || $ogr !=0)
 	  puts "update()"
 	  eklemeFonksiyonu_buton
-#	  if $ekleme_onceden_yapilmismi == 0
+	  if $ekleme_onceden_yapilmismi == 0
 		  Qt::MessageBox.information self, "Information", _("Bilgiler Kaydedildi")
-#		  $ekleme_onceden_yapilmismi = 0 # deger guncelledik
- #         end
+          end
        end
      
  end

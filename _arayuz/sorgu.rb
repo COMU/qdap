@@ -3,8 +3,6 @@
  require 'rubygems'
  require 'net/ldap'
 
-$ekleme_onceden_yapilmismi = 0
-
 def silmeFonksiyonu
     $kullaniciSilme = @line_arama.text.length
          if $kullaniciSilme !=0
@@ -105,12 +103,38 @@ def duzenle
     end
 puts "*"
   end
-
- 
  
   def eklemeFonksiyonu_buton
-	dn = "mail=#{@line_kad.text},ou=#{$bilgi},ou=people,dc=comu,dc=edu,dc=tr"
-    attr = {
+ 
+    dizi = Array.new
+    dizi[0] = "#{@line_ad.text} #{@line_sad.text}"  # cn 
+    dizi[1] = @line_kad.text  # mail adresi
+    dizi[2] = $bilgi
+    dizi[3] = @line_paswd.text
+      $mail_ = @line_kad.text
+      ldap = Net::LDAP.new :host => 'localhost',
+                          :port => 389,
+                          :auth => {
+                          :method => :simple,
+                          :username => "cn=admin,dc=comu,dc=edu,dc=tr",
+                          :password => "parola"
+        }
+
+         filter = Net::LDAP::Filter.eq("mail",$mail_)
+         treebase = "dc=comu,dc=edu,dc=tr"
+         ldap.search(:base => treebase, :filter => filter) do |entry|            
+                  if $mail_ != nil
+                        puts "**"
+                        Qt::MessageBox.warning self, "Warning", _("Ayni mail adresini iki kez kullanamazsiniz")
+			$ekleme_onceden_yapilmismi  = 1
+			return 
+                  else
+			$ekleme_onceden_yapilmismi = 0
+			puts "else"
+		end
+	 end
+     dn = "mail=#{@line_kad.text},ou=#{$bilgi},ou=people,dc=comu,dc=edu,dc=tr" 
+     attr = {
           :uid => "#{@line_kad.text}",
           :cn => "#{@line_ad.text} #{@line_sad.text}",
           :objectclass => ["organizationalPerson","person","inetorgperson"],
@@ -119,22 +143,16 @@ puts "*"
           :mail => "#{@line_kad.text}",
           :userPassword => "#{@line_paswd.text}"
     }
-    dizi = Array.new
-    dizi[0] = "#{@line_ad.text} #{@line_sad.text}"  # cn 
-    dizi[1] = @line_kad.text  # mail adresi
-    dizi[2] = $bilgi
-    dizi[3] = @line_paswd.text
-    Net::LDAP.open( :host => 'localhost', :port => 389,:base =>
+
+
+	 Net::LDAP.open( :host => 'localhost', :port => 389,:base =>
           'cn=#{@line_ad.text} #{@line_sad.text}', :auth => { :method => :simple, :username => "cn=admin,dc=comu,dc=edu,dc=tr",
            :password => 'parola' } ) do |ldap|
             ldap.add( :dn => dn, :attributes => attr )
-    end
-    file = File.open("ldap.txt","a+")  # tek tek eklenenler 
-    line = dizi.join(",")
-    file.puts("#{line}")
-    
-  end
+	    end
+end
 
+        
 def resetleme    # kullanici aramasi yapildiktan sonra yeni bi arama yapilmasi icin sayfayi temizler
  @line_arama.text = nil 
  @line_ad1.text = nil 
@@ -165,7 +183,7 @@ def dizinAc  # toplu ekleme parolayi zaten burada uretiyo diye text te parola ya
 		puts "****"
 		@temp = Array.new
 		@temp = dizi[0].split(" ") # kullanici adi ve soyadini ayirsin diye
-    dn = "mail=#{dizi[1]},ou=#{dizi[2]},ou=people,dc=comu,dc=edu,dc=tr"
+    dn = "mail=#{dizi[1]},ou=#{dizi[2]},ou=people,ou=#{dizi[2]}dc=comu,dc=edu,dc=tr"
     attr = {
           :uid => "#{dizi[1]}",
           :cn => "#{dizi[0]}",
@@ -184,7 +202,7 @@ def dizinAc  # toplu ekleme parolayi zaten burada uretiyo diye text te parola ya
 end
 
 
-def dialogBox
+def dialogBox  # gecici kullanicilarin personel ya da ogrenci ozelligi eklenmedi
 	 text = Qt::InputDialog.getText self, "Input Dialog","Kullanici Sayisini Giriniz:  "
 	 puts text 
 $i = 0
@@ -195,19 +213,36 @@ while $i < text
 	dizi = Array.new
         dizi[0] = "adi#{$i}"
         dizi[1] = "soyad#{$i}"
-
+        dizi[2] = "adi#{$i}@comu.edu.tr"
         def random_password(size = 8)
           chars = (('a'..'z').to_a + ('0'..'9').to_a) - %w(i o 0 1 l 0)
           (1..size).collect{|a| chars[rand(chars.size)] }.join
         end
-            dizi[2] = random_password.inspect
-            dizi[2] = dizi[2].gsub!(/\W/,"")
-        r = rand(2) # r == 0 ise ou = ogrenci degilse ou = person olsun diye 
+            dizi[3] = random_password.inspect
+            dizi[3] = dizi[3].gsub!(/\W/,"")
         line = dizi.join(",")
-	newfile = File.open("gecici.txt", "a+")   # gecici kullanicilar text 
+	newfile = File.open("gecici.txt", "a+")
 	newfile.puts("#{line}")
+dn = "mail=#{dizi[2]},ou=people,dc=comu,dc=edu,dc=tr"
+
+    attr = {
+          :uid => "#{dizi[0]}",
+          :cn => "#{dizi[0]} #{dizi[1]}",
+          :objectclass => ["organizationalPerson","person","inetorgperson"],
+          :sn => dizi[1],
+          :givenName => "dizi[0]",
+          :mail => dizi[2],
+          :userPassword => dizi[3]
+    }
+    Net::LDAP.open( :host => 'localhost', :port => 389,:base =>
+          'cn=#{@line_ad.text} #{@line_sad.text}', :auth => { :method => :simple, :username => "cn=admin,dc=comu,dc=edu,dc=tr",
+           :password => 'parola' } ) do |ldap|
+            ldap.add( :dn => dn, :attributes => attr )
+    end
+
 end
 end
+
 def toplu_sil
 
         dosya_adi = Qt::FileDialog.new.getOpenFileName(self, tr("Open Image"))
