@@ -1,2 +1,0 @@
-Simge Sezgin,simge@comu.edu.tr,ogrenci,123
-Aysecan Govdeli,ayse@comu.edu.tr,personel,345

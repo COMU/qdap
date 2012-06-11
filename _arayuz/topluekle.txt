@@ -1,0 +1,4 @@
+adi4 soyad4,ad4@comu.edu.tr,personel,m3tvnvdde
+adi3 soyad3,ad3@comu.edu.tr,personel,rz9kp7d2
+adi2 soyad2,ad2@comu.edu.tr,ogrenci,2dpwdm33
+adi1 soyad1,ad1@comu.edu.tr,ogrenci,mjyw5dx4

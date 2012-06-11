@@ -15,10 +15,9 @@ class Uygulama < Qt::TabWidget
 include GetText
     slots 'duzenle()'
     slots 'dizinAc()'
-    slots 'resetleme()'
     slots 'silmeFonksiyonu()' 
     slots 'secim()'
-    slots  'onchangedAd(QString)'
+    slots 'onchangedAd(QString)'
     slots 'onchangedkAd(QString)'
     slots 'onchangedsAd(QString)'
     slots 'onchangedpaswd(QString)'
@@ -26,10 +25,10 @@ include GetText
     slots 'fonksiyon()'
     slots 'slots_radio_ogr()'
     slots 'slots_radio_per()'
-    slots 'aramaFonksiyonu_buton()'
+    slots 'aramaFonksiyonu()'
     slots 'onchangedArama(QString)'
     slots 'kullaniciSilme()'
-    slots 'dialogBox()'
+    slots 'geciciTopluEkle()'
     slots 'toplu_sil()'
     signals 'my_signals(QString)'
  
@@ -101,19 +100,7 @@ end
 	@radio_ogr.geometry = Qt::Rect.new(350, 30, 116, 22)
 	@radio_per = Qt::RadioButton.new(@tab)
 	@radio_per.geometry = Qt::Rect.new(350, 80, 116, 22)
-=begin
-	@comboBox_fklt = Qt::ComboBox.new(@tab)
-	@comboBox_fklt.geometry = Qt::Rect.new(160, 200, 111, 27)
-	@label_fklt = Qt::Label.new(@tab)
-	@label_fklt.geometry = Qt::Rect.new(20, 210, 81, 20)
-	@label_bol = Qt::Label.new(@tab)
-	@label_bol.geometry = Qt::Rect.new(20, 250, 81, 20)
-	@comboBox_bol = Qt::ComboBox.new(@tab)
-	@comboBox_bol.geometry = Qt::Rect.new(160, 240, 111, 27)
-	@comboBox_fklt.insertItems(0, [Qt::Application.translate("Form", "Muhendislik-Mimarlik Fakultesi", nil, Qt::Application::UnicodeUTF8)])
-	@comboBox_fklt.insertItems(1, [Qt::Application.translate("Form", "Fen-Edebiyat Fakultesi", nil, Qt::Application::UnicodeUTF8)])
-	@comboBox_fklt.insertItems(2, [Qt::Application.translate("Form", "Egitim Fakultesi", nil, Qt::Application::UnicodeUTF8)])
-=end
+
 	tabWidget.addTab(@tab, Qt::Application.translate(nil, "Tab 1", nil, Qt::Application::UnicodeUTF8))
 	@tab1 = Qt::Widget.new()
 
@@ -135,11 +122,8 @@ end
 	@button_gecici.geometry = Qt::Rect.new(30,230,91,27)
 	@button_gecici.text = Qt::Application.translate(nil,"Gecici Ekle",nil,Qt::Application::UnicodeUTF8)
 	
-	Qt::Object.connect(@button_gecici,SIGNAL('clicked()'),self,SLOT('dialogBox()'))
+	Qt::Object.connect(@button_gecici,SIGNAL('clicked()'),self,SLOT('geciciTopluEkle()'))
 
-        @button_reset = Qt::PushButton.new(@tab1)
-        @button_reset.geometry = Qt::Rect.new(380,310,91,27)
-        @button_reset.text = Qt::Application.translate(nil, "Reset", nil, Qt::Application::UnicodeUTF8)
 	@label_kad1 = Qt::Label.new(@tab1)
 	@label_kad1.geometry = Qt::Rect.new(20,200,81,20)
 	@label_sad1 = Qt::Label.new(@tab1)
@@ -161,23 +145,7 @@ end
 	@radio_ogr1.geometry = Qt::Rect.new(270,20,116,22)
 	@radio_per1 = Qt::RadioButton.new(@tab1)
 	@radio_per1.geometry = Qt::Rect.new(270,60,116,22)
-=begin
-	@comboBox_fklt1 = Qt::ComboBox.new(@tab1)
-	@comboBox_fklt1.geometry = Qt::Rect.new(370,100,111,27)
-	@label_fklt1 = Qt::Label.new(@tab1)
-	@label_fklt1.geometry = Qt::Rect.new(270,110,81,20)
-	@label_bol1 = Qt::Label.new(@tab1)
-	@label_bol1.geometry = Qt::Rect.new(270,150,81,20)
-	@comboBox_bol1 = Qt::ComboBox.new(@tab1)
-	@comboBox_bol1.insertItems(0, [Qt::Application.translate("Form", "Bilgisayar Muhendisligi", nil, Qt::Application::UnicodeUTF8)])
-	@comboBox_bol1.insertItems(0, [Qt::Application.translate("Form", "Biyoloji Ogretmenligi", nil, Qt::Application::UnicodeUTF8)])
-	@comboBox_bol1.insertItems(0, [Qt::Application.translate("Form", "Fizik", nil, Qt::Application::UnicodeUTF8)])
-	@comboBox_bol1.geometry = Qt::Rect.new(370,150,111,27)
-	@comboBox_fklt1.insertItems(0, [Qt::Application.translate("Form", "Muhendislik-Mimarlik Fakultesi", nil, Qt::Application::UnicodeUTF8)])
-	@comboBox_fklt1.insertItems(1, [Qt::Application.translate("Form", "Fen-Edebiyat Fakultesi", nil, Qt::Application::UnicodeUTF8)])
-	@comboBox_fklt1.insertItems(2, [Qt::Application.translate("Form", "Egitim Fakultesi", nil, Qt::Application::UnicodeUTF8)])
-=end
-	#silme
+#silme
 	@button_kullanicisilme = Qt::PushButton.new(@tab1)
 	@button_kullanicisilme.geometry = Qt::Rect.new(20, 310, 101, 27)
 	@button_kullanicisilme.text = Qt::Application.translate(nil, "Kullanici Sil", nil, Qt::Application::UnicodeUTF8)
@@ -215,13 +183,7 @@ end
         @label_paswd.text = Qt::Application.translate(nil, "Parola", nil, Qt::Application::UnicodeUTF8)
         @radio_ogr.text = Qt::Application.translate(nil, "Ogrenci", nil, Qt::Application::UnicodeUTF8)
         @radio_per.text = Qt::Application.translate(nil, "Personel", nil, Qt::Application::UnicodeUTF8)
-=begin
-        @label_fklt.text = Qt::Application.translate(nil, "Fakulte", nil, Qt::Application::UnicodeUTF8)
-        @label_bol.text = Qt::Application.translate(nil, "Bolum", nil, Qt::Application::UnicodeUTF8)
-	@comboBox_bol.insertItems(0, [Qt::Application.translate("Form", "Bilgisayar Muhendisligi", nil, Qt::Application::UnicodeUTF8)])
-	@comboBox_bol.insertItems(0, [Qt::Application.translate("Form", "Biyoloji Ogretmenligi", nil, Qt::Application::UnicodeUTF8)])
-	@comboBox_bol.insertItems(0, [Qt::Application.translate("Form", "Fizik", nil, Qt::Application::UnicodeUTF8)])
-=end
+
         tabWidget.setTabText(tabWidget.indexOf(@tab), Qt::Application.translate(nil, "Ekle", nil, Qt::Application::UnicodeUTF8))
         tabWidget.setTabText(tabWidget.indexOf(@tab1), Qt::Application.translate(nil, gettext("Duzenle"), nil, Qt::Application::UnicodeUTF8))
 	#ceviri icin buton
@@ -244,19 +206,14 @@ Qt::Object.connect(@button_topluEkle,SIGNAL('clicked()'),self,SLOT('dizinAc()'))
 	 Qt::Object.connect(@button_parolasil, SIGNAL('clicked()'), self, SLOT('slots_paswd()'))
        	 Qt::Object.connect(@radio_per, SIGNAL('clicked(bool)'), self, SLOT('slots_radio_per()'))
 	 Qt::Object.connect(@radio_ogr, SIGNAL('clicked(bool)'), self, SLOT('slots_radio_ogr()'))
-=begin
- Qt::Object.connect(@radio_per, SIGNAL('clicked(bool)'), @comboBox_bol, SLOT('setDisabled(bool)'))
- Qt::Object.connect(@radio_per, SIGNAL('clicked(bool)'), @comboBox_fklt, SLOT('setDisabled(bool)'))
- Qt::Object.connect(@radio_ogr, SIGNAL('clicked(bool)'), @comboBox_bol, SLOT('setEnabled(bool)'))
- Qt::Object.connect(@radio_ogr, SIGNAL('clicked(bool)'), @comboBox_fklt, SLOT('setEnabled(bool)'))
-=end
+
  Qt::Object.connect(@line_ad,SIGNAL('textChanged(QString)'),self,SLOT('onchangedAd(QString)'))
  Qt::Object.connect(@line_kad,SIGNAL('textChanged(QString)'),self,SLOT('onchangedkAd(QString)'))
  Qt::Object.connect(@line_paswd,SIGNAL('textChanged(QString)'),self,SLOT('onchangedpaswd(QString)'))
  Qt::Object.connect(@line_sad,SIGNAL('textChanged(QString)'),self,SLOT('onchangedsAd(QString)'))
  
   
-  Qt::Object.connect(@button_arama, SIGNAL('clicked()'), self, SLOT('aramaFonksiyonu_buton()'))
+  Qt::Object.connect(@button_arama, SIGNAL('clicked()'), self, SLOT('aramaFonksiyonu()'))
   Qt::Object.connect(@button_kullanicisilme, SIGNAL('clicked()'), self, SLOT('silmeFonksiyonu()'))
   
   def secim
@@ -301,7 +258,7 @@ Qt::Object.connect(@button_topluEkle,SIGNAL('clicked()'),self,SLOT('dizinAc()'))
   end
 
  def slots_radio_per
-	$bilgi = "personel"
+	$bilgi = "personel"  
 	$per = 1
  end
 
@@ -362,10 +319,7 @@ Qt::Object.connect(@button_topluEkle,SIGNAL('clicked()'),self,SLOT('dizinAc()'))
       end
       if $x!=0 and $paswd >= 8 and ($per !=0 || $ogr !=0)
 	  puts "update()"
-	  eklemeFonksiyonu_buton
-	  if $ekleme_onceden_yapilmismi == 0
-		  Qt::MessageBox.information self, "Information", _("Bilgiler Kaydedildi")
-          end
+	  eklemeFonksiyonu
        end
      
  end
@@ -373,7 +327,7 @@ Qt::Object.connect(@button_topluEkle,SIGNAL('clicked()'),self,SLOT('dizinAc()'))
  Qt::Object.connect(@button_, SIGNAL('rejected()'), tabWidget, SLOT('close()'))
  Qt::Object.connect(@button_, SIGNAL('accepted()'),self, SLOT('fonksiyon()'))
  Qt::Object.connect(@button_cancel2,SIGNAL('clicked()'),tabWidget,SLOT('close()'))
- Qt::Object.connect(@button_reset,SIGNAL('clicked()'),self,SLOT('resetleme()'))
+
 
    end
 end

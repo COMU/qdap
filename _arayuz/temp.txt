@@ -1,6 +1,0 @@
-Ebru Akagunduz,100401004@comu.edu.tr,123
-Ayse Chan,100401004@comu.edu.tr,123
-Elif Akagunduz,100401004@comu.edu.tr,123
-Ahmet Akagunduz,100401004@comu.edu.tr,123
-Ali Akagunduz,100401004@comu.edu.tr,123
-Fatma Akagunduz,100401004@comu.edu.tr,123
